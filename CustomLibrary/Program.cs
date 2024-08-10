@@ -1,4 +1,6 @@
 using CustomLibrary.Data;
+using CustomLibrary.Interfaces;
+using CustomLibrary.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +15,8 @@ builder.Services.AddDbContext<LibraryDBContext>(option =>
 {
     option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultSQLConnection"));
 });
+
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 
