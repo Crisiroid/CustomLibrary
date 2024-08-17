@@ -17,6 +17,7 @@ builder.Services.AddDbContext<LibraryDBContext>(option =>
 });
 
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 var app = builder.Build();
 

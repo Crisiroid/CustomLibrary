@@ -10,11 +10,13 @@ namespace CustomLibrary.Controllers
     [Route("/v1/Users")]
     public class UserController : ControllerBase
     {
-        private readonly IUserService _userService; 
+        private readonly IUserService _userService;
+        private readonly IAuthService _authService;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, IAuthService authService)
         {
             _userService = userService;
+            _authService = authService; 
         }
         
         
@@ -33,16 +35,17 @@ namespace CustomLibrary.Controllers
                 User findUser = _userService.FindUserByEmail(user.Email);
                 if(findUser == null)
                 {
+                    var pass = _authService.HashPassword(user.Password); 
                     User newUser = new User
                     {
                         Name = user.Name,
                         Email = user.Email,
-                        Password = user.Password
+                        Password = pass
                     };
 
                     _userService.CreateUser(newUser);
 
-                    return Ok("User Was Created");
+                    return Ok(new {Email = user.Email, password = pass});
                 }
                 else
                 {
@@ -105,5 +108,7 @@ namespace CustomLibrary.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+
     }
 }

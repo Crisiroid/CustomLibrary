@@ -14,27 +14,14 @@ namespace CustomLibrary.Services
         }
         public void CreateUser(User user)
         {
-            try
-            {
-                _dbContext.Users.Add(user);
-                _dbContext.SaveChanges();
-            }catch(Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+            _dbContext.Users.Add(user);
+            _dbContext.SaveChanges();
         }
 
         public void DeleteUser(User user)
         {
-            try
-            {
-                _dbContext.Users.Remove(user);
-                _dbContext.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+            _dbContext.Users.Remove(user);
+            _dbContext.SaveChanges();
         }
 
         public User FindUserByEmail(string email)
@@ -54,16 +41,12 @@ namespace CustomLibrary.Services
 
         public void UpdateUser(User user)
         {
-            try
-            {
-                _dbContext.Users.Update(user);
-                _dbContext.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-
-            }
+            _dbContext.Users.Update(user);
+            _dbContext.SaveChanges();
+        }
+        public User FindUserByEmailAndPassword(string email, string password)
+        {
+            return _dbContext.Users.SingleOrDefault(u => u.Email == email && u.Password == password);
         }
     }
 }
